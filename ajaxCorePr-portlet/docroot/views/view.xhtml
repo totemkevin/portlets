@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+
+		<!-- Example 1======================================================== -->
+
+		<p:panel header="Ajax test example 1: Basic">
+			<h:form>
+				<h:panelGrid columns="4" cellpadding="5">
+					<h:outputLabel for="name" value="Name:" style="font-weight:bold" />
+					<p:inputText id="name" value="#{bs.text}" />
+					<p:commandButton value="Submit" update="display"
+						icon="ui-icon-check" />
+					<h:outputText id="display" value="#{bs.text}" />
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+
+		<!-- Example 2======================================================== -->
+
+		<p:panel header="Ajax test example 2: Event" style="margin-top:10px">
+
+			<h:form>
+				<p:growl id="msg" />
+				<h:panelGrid columns="3" cellpadding="5">
+					<h:outputText value="KeyUp: " />
+					<p:inputText id="firstname" value="#{userView.firstname}">
+						<p:ajax event="keyup" update="msg"
+							listener="#{userView.addMessage}" />
+					</p:inputText>
+					<h:outputText id="out1" value="#{userView.firstname}" />
+
+					<h:outputText value="Blur: " />
+					<p:inputText id="surname" value="#{userView.lastname}">
+						<p:ajax event="blur" update="out2" />
+					</p:inputText>
+					<h:outputText id="out2" value="#{userView.lastname}" />
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+
+		<!-- Example 3======================================================== -->
+
+		<p:panel header="Ajax test example 3: select city" style="margin-top:10px">
+			<h:form id="selectCity">
+				<p:growl id="msgs" showDetail="true" />
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="country" value="Country: " />
+						<p:selectOneMenu id="country" value="#{dropdownView.country}" style="width:150px">
+							<p:ajax listener="#{dropdownView.onCountryChange}" update="city" />
+							<f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{dropdownView.countries}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="city" value="City: " />
+						<p:selectOneMenu id="city" value="#{dropdownView.city}"	style="width:150px">
+							<f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{dropdownView.cities}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<p:separator />
+
+					<p:commandButton value="Submit" update="msgs" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" />
+			</h:form>
+		</p:panel>
+
+		<!-- Example 4======================================================== -->
+
+
+
+		<!-- Example 5======================================================== -->
+	</h:body>
+</f:view>
